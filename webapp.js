@@ -75,15 +75,13 @@ validateparams = function(params)
         }
         else
         {
-            console.log(key);
-            console.log(params[key]);
+            console.log(key+" is undefinded. All values must be included");
             return key+" is undefinded. All values must be included";
         }
         i++;
     }
     
  
-    console.log('rc');
     return rc;
 
 }
@@ -120,7 +118,7 @@ app.post('/reg', function (req, res) {
         res.send("Validation Error: "+rc+"\n");
     }
 });
-let port =2000;
+let port =3000;
 app.listen(port, function () {
     console.log('Express server listening on port ' + port);
 });
