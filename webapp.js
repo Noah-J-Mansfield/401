@@ -6,7 +6,7 @@ let mysql = require("mysql");
 let pool = mysql.createPool({    
     "host": "localhost",
     "user": "ubuntu",
-    "password": "",
+    "password": "password",
     "database": "contest",
     "connectionLimit": 10
 });
