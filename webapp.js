@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 
 let express = require("express");
 var bodyParser = require("body-parser");
