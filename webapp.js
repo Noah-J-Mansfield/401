@@ -14,7 +14,7 @@ let pool = mysql.createPool({
 
 let app = express();
 app.use(bodyParser.urlencoded({extended:false}));
-app.get('/reg', function (req, res) {
+app.get('/registrations', function (req, res) {
 
     pool.getConnection(function(err, connection) {
         if (err) {
@@ -86,7 +86,7 @@ validateparams = function(params)
 
 }
 
-app.post('/reg', function (req, res) {
+app.post('/registrations', function (req, res) {
    
     let data = req.body;
     let rc = validateparams(req.body);
