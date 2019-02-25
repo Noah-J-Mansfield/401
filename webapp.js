@@ -5,8 +5,7 @@ var bodyParser = require("body-parser");
 let mysql = require("mysql");
 let pool = mysql.createPool({    
     "host": "localhost",
-    "user": "root",
-    "password": "passw0rd",
+    "user": "ubuntu",
     "database": "contest",
     "connectionLimit": 10
 });
