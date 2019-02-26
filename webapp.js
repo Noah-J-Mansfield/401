@@ -96,16 +96,22 @@ app.post('/registrations', function (req, res) {
         pool.getConnection(function(err,connection){
             if(err)
             {
+		if(err["sqlMessage"].search("Duplicate entry") != -1){
+			console.log("Problem: Duplicate entry");
+		}
+		else{
                 console.log("Problem: "+ err);
+		}
                 return;
             };
             sql = mysql.format(sql, [data.firstname, data.lastname,data.grade,data.email,data.shirtsize,data.hrusername]);
             connection.query(sql, function(err, results){
-                if(err)
+               	connection.release();
+		if(err)
                 {
                     console.log(err);
                     res.status(500);
-                    res.send(err);
+                    res.send(err.sqlMessage);
                     return;
                 }
                 res.sendStatus(200);
