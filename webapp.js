@@ -1,5 +1,8 @@
 #!/usr/bin/env node
-
+//Noah Mansfield
+//web server to register for a contest
+//accepts get and post commands
+//listening on port 3000
 let express = require("express");
 var bodyParser = require("body-parser");
 let mysql = require("mysql");
@@ -14,6 +17,7 @@ let pool = mysql.createPool({
 
 let app = express();
 app.use(bodyParser.urlencoded({extended:false}));
+//query the database for all contestents
 app.get('/registrations', function (req, res) {
 
     pool.getConnection(function(err, connection) {
@@ -27,6 +31,9 @@ app.get('/registrations', function (req, res) {
         });
     });
 });
+//validat string. string < 50
+//returns 1 if string does not pass
+//zero otherwise
 let valstr = function(s)
 {
     if(s.length > 50 || s.length < 1)
@@ -34,6 +41,8 @@ let valstr = function(s)
     else
         return 0;
 }
+//returns 1 if size is not one of the avalible options
+//zero otherwise
 let valsize = function(c)
 {
     
@@ -42,6 +51,9 @@ let valsize = function(c)
     else
         return 1;
 }
+//validates an integer
+//return 1 if not 9,10,or 11
+//zero otherwise
 let valint = function(i){
     if(i != 9 && i != 10 && i != 11 && i!=12)
     {
@@ -51,6 +63,7 @@ let valint = function(i){
         return 0;
     }
 };
+//object to handle validation
 let valid = {
 "firstname":valstr,
 "lastname":valstr,
@@ -59,21 +72,25 @@ let valid = {
 "shirtsize":valsize,
 "hrusername":valstr
 };
+//returns an error string if params does not pass all the tests
+//zero otherwise
 validateparams = function(params)
 {
     let rc = 0;
     let k = Object.keys(valid);
     let i = 0;
+// loop through keys in valid object
     while(i < k.length){    
-        let key = k[i];
-        if(params[key])
+        let key = k[i]; //makes the code cleaner
+        if(params[key]) //if key form valid in params object
         {
+	    //attempt to validate param
             if (valid[key](params[key]) != 0){
                 console.log("invalid on key:"+key);
                 return key+" is invalid";
             }
         }
-        else
+        else //param[key] is undefined
         {
             console.log(key+" is undefinded. All values must be included");
             return key+" is undefinded. All values must be included";
@@ -85,9 +102,9 @@ validateparams = function(params)
     return rc;
 
 }
-
+//inserts a new record into database
 app.post('/registrations', function (req, res) {
-   
+    
     let data = req.body;
     let rc = validateparams(req.body);
     if(rc == 0)
