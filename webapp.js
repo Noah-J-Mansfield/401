@@ -65,12 +65,12 @@ let valint = function(i){
 };
 //object to handle validation
 let valid = {
-"firstname":valstr,
-"lastname":valstr,
+"firstName":valstr,
+"lastName":valstr,
 "grade":valint,
 "email":valstr,
-"shirtsize":valsize,
-"hrusername":valstr
+"shirtSize":valsize,
+"hrUsername":valstr
 };
 //returns an error string if params does not pass all the tests
 //zero otherwise
@@ -121,7 +121,7 @@ app.post('/registrations', function (req, res) {
 		}
                 return;
             };
-            sql = mysql.format(sql, [data.firstname, data.lastname,data.grade,data.email,data.shirtsize,data.hrusername]);
+            sql = mysql.format(sql, [data.firstName, data.lastName,data.grade,data.email,data.shirtSize,data.hrUsername]);
             connection.query(sql, function(err, results){
                	connection.release();
 		if(err)
